@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Dot_Net_Core_API_with_JWT.Dtos.Character;
 using Dot_Net_Core_API_with_JWT.Models;
 using Dot_Net_Core_API_with_JWT.Services.CharacterService;
 using Microsoft.AspNetCore.Mvc;
@@ -19,19 +20,19 @@ namespace Dot_Net_Core_API_with_JWT.Controllers
     }
 
     [HttpGet("getall")] // Route character/getall
-    public async Task<ActionResult<ServiceResponse<List<Character>>>> Get() //Swagger needs => ActionResult<Character> Else Can use IActionResult
+    public async Task<ActionResult<ServiceResponse<List<GetCharacterDto>>>> Get() //Swagger needs => ActionResult<Character> Else Can use IActionResult
     { 
       return Ok(await _characterService.GetAllCharacters()); //Return a list of characters
     }
 
     [HttpGet("{id}")] // Route character/id
-    public async Task<ActionResult<ServiceResponse<Character>>> GetSingle(int id)
+    public async Task<ActionResult<ServiceResponse<GetCharacterDto>>> GetSingle(int id)
     {
       return Ok(await _characterService.GetCharacterById(id));
     }
 
     [HttpPost]
-    public async Task<ActionResult<ServiceResponse<List<Character>>>> AddCharacter(Character newCharacter)
+    public async Task<ActionResult<ServiceResponse<List<GetCharacterDto>>>> AddCharacter(AddCharacterDto newCharacter)
     {      
       return Ok(await _characterService.AddCharacter(newCharacter));
     }
