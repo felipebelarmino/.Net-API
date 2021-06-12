@@ -9,6 +9,7 @@ namespace Dot_Net_Core_API_with_JWT
         public AutoMapperProfile()
         {
             CreateMap<Character, GetCharacterDto>();
+            CreateMap<AddCharacterDto, Character>();
         }
     }
 }
