@@ -8,6 +8,6 @@ namespace Dot_Net_Core_API_with_JWT.Models
     public int Strength { get; set; } = 10;
     public int Defense { get; set; } = 10;
     public int Intelligence { get; set; } = 10;
-    public RpgClass Class { get; set; } = RpgClass.Knight; //Enum
+    public RpgClass Class { get; set; } = RpgClass.Mage; //Enum
   }
 }

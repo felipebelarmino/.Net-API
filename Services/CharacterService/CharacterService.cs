@@ -3,32 +3,31 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Dot_Net_Core_API_with_JWT.Data;
 using Dot_Net_Core_API_with_JWT.Dtos.Character;
 using Dot_Net_Core_API_with_JWT.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Dot_Net_Core_API_with_JWT.Services.CharacterService
 {
   public class CharacterService : ICharacterService
   {
-    private static List<Character> characters = new List<Character> //Return List using model Character
-    {
-      new Character(),
-      new Character { Id = 1, Name = "Sam" } //Creating a new Character
-    };
     private readonly IMapper _mapper;
+    private readonly DataContext _context;
 
-    public CharacterService(IMapper mapper)
+    public CharacterService(IMapper mapper, DataContext context)
     {
       _mapper = mapper;
+      _context = context;
     }
 
     public async Task<ServiceResponse<List<GetCharacterDto>>> AddCharacter(AddCharacterDto newCharacter)
     {
       var serviceResponse = new ServiceResponse<List<GetCharacterDto>>();
       Character character = _mapper.Map<Character>(newCharacter);
-      character.Id = characters.Max(c => c.Id) + 1; //Counts N of id´s and Add plus 1
-      characters.Add(character); //Add character
-      serviceResponse.Data = characters.Select(c => _mapper.Map<GetCharacterDto>(c)).ToList();
+      _context.Characters.Add(character); //Add character
+      await _context.SaveChangesAsync();
+      serviceResponse.Data = await _context.Characters.Select(c => _mapper.Map<GetCharacterDto>(c)).ToListAsync();
       return serviceResponse;
     }
 
@@ -38,9 +37,10 @@ namespace Dot_Net_Core_API_with_JWT.Services.CharacterService
 
       try
       {
-        Character character = characters.First(c => c.Id == id);
-        characters.Remove(character);
-        serviceResponse.Data = characters.Select(c => _mapper.Map<GetCharacterDto>(c)).ToList();
+        Character character = await _context.Characters.FirstAsync(c => c.Id == id);
+        _context.Characters.Remove(character);
+        await _context.SaveChangesAsync();
+        serviceResponse.Data = _context.Characters.Select(c => _mapper.Map<GetCharacterDto>(c)).ToList();
       }
       catch (Exception ex)
       {
@@ -53,14 +53,17 @@ namespace Dot_Net_Core_API_with_JWT.Services.CharacterService
     public async Task<ServiceResponse<List<GetCharacterDto>>> GetAllCharacters()
     {
       var serviceResponse = new ServiceResponse<List<GetCharacterDto>>();
-      serviceResponse.Data = characters.Select(c => _mapper.Map<GetCharacterDto>(c)).ToList();
+
+      var dbCharacters = await _context.Characters.ToListAsync();
+      serviceResponse.Data = dbCharacters.Select(c => _mapper.Map<GetCharacterDto>(c)).ToList();
       return serviceResponse;
     }
 
     public async Task<ServiceResponse<GetCharacterDto>> GetCharacterById(int id)
     {
       var serviceResponse = new ServiceResponse<GetCharacterDto>();
-      serviceResponse.Data = _mapper.Map<GetCharacterDto>(characters.FirstOrDefault(c => c.Id == id));
+      var dbCharacter = await _context.Characters.FirstOrDefaultAsync(c => c.Id == id);
+      serviceResponse.Data = _mapper.Map<GetCharacterDto>(dbCharacter);
       return serviceResponse;
     }
 
@@ -70,13 +73,17 @@ namespace Dot_Net_Core_API_with_JWT.Services.CharacterService
 
       try
       {
-        Character character = characters.FirstOrDefault(c => c.Id == updatedCharacter.Id);
+        Character character = await _context.Characters.FirstOrDefaultAsync(c => c.Id == updatedCharacter.Id);
+
         character.Name = updatedCharacter.Name;
         character.HitPoints = updatedCharacter.HitPoints;
         character.Strength = updatedCharacter.Strength;
         character.Defense = updatedCharacter.Defense;
         character.Intelligence = updatedCharacter.Intelligence;
         character.Class = updatedCharacter.Class;
+
+        await _context.SaveChangesAsync();
+
         serviceResponse.Data = _mapper.Map<GetCharacterDto>(character);
       }
       catch (Exception ex)
