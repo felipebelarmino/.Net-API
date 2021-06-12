@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Dot_Net_Core_API_with_JWT.Services.CharacterService;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -28,6 +29,9 @@ namespace Dot_Net_Core_API_with_JWT
         {
 
             services.AddControllers();
+
+            services.AddScoped<ICharacterService, CharacterService>();
+            
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Dot_Net_Core_API_with_JWT", Version = "v1" });
