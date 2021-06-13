@@ -1,13 +1,16 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Dot_Net_Core_API_with_JWT.Dtos.Character;
 using Dot_Net_Core_API_with_JWT.Models;
 using Dot_Net_Core_API_with_JWT.Services.CharacterService;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Dot_Net_Core_API_with_JWT.Controllers
 {
+  [Authorize]
   [ApiController]
   [Route("[controller]")]
   public class CharacterController : ControllerBase //Base class for MVC Controller
@@ -22,7 +25,8 @@ namespace Dot_Net_Core_API_with_JWT.Controllers
     [HttpGet("getall")] // Route character/getall
     public async Task<ActionResult<ServiceResponse<List<GetCharacterDto>>>> Get() //Swagger needs => ActionResult<Character> Else Can use IActionResult
     { 
-      return Ok(await _characterService.GetAllCharacters()); //Return a list of characters
+      int id = int.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
+      return Ok(await _characterService.GetAllCharacters(id)); //Return a list of characters
     }
 
     [HttpGet("{id}")] // Route character/id
