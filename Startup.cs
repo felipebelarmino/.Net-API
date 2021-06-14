@@ -1,7 +1,6 @@
 using System.Text;
 using Dot_Net_Core_API_with_JWT.Data;
-using Dot_Net_Core_API_with_JWT.Services.CharacterService;
-using Dot_Net_Core_API_with_JWT.Services.WeaponService;
+using Dot_Net_Core_API_with_JWT.Services.ClientService;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -28,7 +27,7 @@ namespace Dot_Net_Core_API_with_JWT
     // This method gets called by the runtime. Use this method to add services to the container.
     public void ConfigureServices(IServiceCollection services)
     {
-      services.AddDbContext<DataContext>(options => 
+      services.AddDbContext<DataContext>(options =>
         options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
       services.AddControllers();
 
@@ -38,16 +37,16 @@ namespace Dot_Net_Core_API_with_JWT
 
         c.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
         {
-           Description = "Standard Authorization header using the Bearer Scheme. Example: \"Bearer{token}\"",
-           In = ParameterLocation.Header,
-           Name = "Authorization",
-           Type = SecuritySchemeType.ApiKey
+          Description = "Standard Authorization header using the Bearer Scheme. Example: \"Bearer{token}\"",
+          In = ParameterLocation.Header,
+          Name = "Authorization",
+          Type = SecuritySchemeType.ApiKey
         });
         c.OperationFilter<SecurityRequirementsOperationFilter>();
       });
 
       services.AddAutoMapper(typeof(Startup));
-      services.AddScoped<ICharacterService, CharacterService>();
+      services.AddScoped<IClientService, clientService>();
       services.AddScoped<IAuthRepository, AuthRepository>();
 
       services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -61,9 +60,8 @@ namespace Dot_Net_Core_API_with_JWT
             ValidateIssuer = false,
             ValidateAudience = false
           };
-      });  
+        });
       services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-      services.AddScoped<IWeaponService, WeaponService>();
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

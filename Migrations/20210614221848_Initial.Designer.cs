@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Dot_Net_Core_API_with_JWT.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20210614163621_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20210614221848_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,30 +21,21 @@ namespace Dot_Net_Core_API_with_JWT.Migrations
                 .HasAnnotation("ProductVersion", "5.0.7")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Dot_Net_Core_API_with_JWT.Models.Character", b =>
+            modelBuilder.Entity("Dot_Net_Core_API_with_JWT.Models.Client", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("Adress")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("Class")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Defense")
-                        .HasColumnType("int");
-
-                    b.Property<int>("HitPoints")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Intelligence")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Strength")
-                        .HasColumnType("int");
 
                     b.Property<int?>("UserId")
                         .HasColumnType("int");
@@ -53,7 +44,7 @@ namespace Dot_Net_Core_API_with_JWT.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Characters");
+                    b.ToTable("Clients");
                 });
 
             modelBuilder.Entity("Dot_Net_Core_API_with_JWT.Models.User", b =>
@@ -69,6 +60,12 @@ namespace Dot_Net_Core_API_with_JWT.Migrations
                     b.Property<byte[]>("PasswordSalt")
                         .HasColumnType("varbinary(max)");
 
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(max)")
+                        .HasDefaultValue("Atendente");
+
                     b.Property<string>("Username")
                         .HasColumnType("nvarchar(max)");
 
@@ -77,58 +74,18 @@ namespace Dot_Net_Core_API_with_JWT.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("Dot_Net_Core_API_with_JWT.Models.Weapon", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("CharacterId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Damage")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CharacterId")
-                        .IsUnique();
-
-                    b.ToTable("Weapons");
-                });
-
-            modelBuilder.Entity("Dot_Net_Core_API_with_JWT.Models.Character", b =>
+            modelBuilder.Entity("Dot_Net_Core_API_with_JWT.Models.Client", b =>
                 {
                     b.HasOne("Dot_Net_Core_API_with_JWT.Models.User", "User")
-                        .WithMany("Characters")
+                        .WithMany("Clients")
                         .HasForeignKey("UserId");
 
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Dot_Net_Core_API_with_JWT.Models.Weapon", b =>
-                {
-                    b.HasOne("Dot_Net_Core_API_with_JWT.Models.Character", "Character")
-                        .WithOne("Weapon")
-                        .HasForeignKey("Dot_Net_Core_API_with_JWT.Models.Weapon", "CharacterId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Character");
-                });
-
-            modelBuilder.Entity("Dot_Net_Core_API_with_JWT.Models.Character", b =>
-                {
-                    b.Navigation("Weapon");
-                });
-
             modelBuilder.Entity("Dot_Net_Core_API_with_JWT.Models.User", b =>
                 {
-                    b.Navigation("Characters");
+                    b.Navigation("Clients");
                 });
 #pragma warning restore 612, 618
         }

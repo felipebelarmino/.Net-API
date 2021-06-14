@@ -9,7 +9,7 @@ namespace Dot_Net_Core_API_with_JWT.Models
         public string Username { get; set; }
         public byte[] PasswordHash { get; set; }
         public byte[] PasswordSalt { get; set; }
-        public List<Character> Characters { get; set; }
+        public List<Client> Clients { get; set; }
         
         [Required]
         public string Role { get; set; }
