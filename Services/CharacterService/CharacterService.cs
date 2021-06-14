@@ -27,6 +27,8 @@ namespace Dot_Net_Core_API_with_JWT.Services.CharacterService
 
     private int GetUserId() => int.Parse(_httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
 
+    private string GetUserRole() => _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Role);
+
     public async Task<ServiceResponse<List<GetCharacterDto>>> AddCharacter(AddCharacterDto newCharacter)
     {
       var serviceResponse = new ServiceResponse<List<GetCharacterDto>>();
@@ -74,7 +76,13 @@ namespace Dot_Net_Core_API_with_JWT.Services.CharacterService
     {
       var serviceResponse = new ServiceResponse<List<GetCharacterDto>>();
 
-      var dbCharacters = await _context.Characters.Where(c => c.User.Id == GetUserId()).ToListAsync();
+      var dbCharacters = 
+      GetUserRole().Equals("Admin") ? await _context.Characters.ToListAsync() 
+        : //Caso não seja Admin retorna apenas o que o user possui
+      await _context.Characters
+        .Include(c => c.Weapon)
+        .Include(c => c.Skills)
+        .Where(c => c.User.Id == GetUserId()).ToListAsync();
       serviceResponse.Data = dbCharacters.Select(c => _mapper.Map<GetCharacterDto>(c)).ToList();
       return serviceResponse;
     }
@@ -82,7 +90,10 @@ namespace Dot_Net_Core_API_with_JWT.Services.CharacterService
     public async Task<ServiceResponse<GetCharacterDto>> GetCharacterById(int id)
     {
       var serviceResponse = new ServiceResponse<GetCharacterDto>();
-      var dbCharacter = await _context.Characters.FirstOrDefaultAsync(c => c.Id == id && c.User.Id == GetUserId());
+      var dbCharacter = await _context.Characters
+        .Include(c => c.Weapon)
+        .Include(c => c.Skills)
+        .FirstOrDefaultAsync(c => c.Id == id && c.User.Id == GetUserId());
       serviceResponse.Data = _mapper.Map<GetCharacterDto>(dbCharacter);
       return serviceResponse;
     }
@@ -96,7 +107,7 @@ namespace Dot_Net_Core_API_with_JWT.Services.CharacterService
         Character character = await _context.Characters
           .Include(c => c.User)
           .FirstOrDefaultAsync(c => c.Id == updatedCharacter.Id);
-        if(character.User.Id == GetUserId())
+        if (character.User.Id == GetUserId())
         {
           character.Name = updatedCharacter.Name;
           character.HitPoints = updatedCharacter.HitPoints;
@@ -107,7 +118,8 @@ namespace Dot_Net_Core_API_with_JWT.Services.CharacterService
           await _context.SaveChangesAsync();
           serviceResponse.Data = _mapper.Map<GetCharacterDto>(character);
         }
-        else{
+        else
+        {
           serviceResponse.Success = false;
           serviceResponse.Message = "Personagem não encontrado.";
         }
@@ -119,6 +131,44 @@ namespace Dot_Net_Core_API_with_JWT.Services.CharacterService
         serviceResponse.Message = ex.Message;
       }
       return serviceResponse;
+    }
+
+    public async Task<ServiceResponse<GetCharacterDto>> AddCharacterSkill(AddCharacterSkillDto newCharacterSkill)
+    {
+      var response = new ServiceResponse<GetCharacterDto>();
+      try
+      {
+        var character = await _context.Characters
+          .Include(c => c.Weapon)
+          .Include(c => c.Skills)
+          .FirstOrDefaultAsync(c => c.Id == newCharacterSkill.CharacterId && c.User.Id == GetUserId());
+
+        if(character == null)
+        {
+          response.Success = false;
+          response.Message = "Personagem não encontrado.";
+          return response;
+        }
+
+        var skill = await _context.Skills.FirstOrDefaultAsync(s => s.Id == newCharacterSkill.SkillsId);
+
+        if(skill == null)
+        {
+          response.Success = false;
+          response.Message = "Skill não encontrada.";
+          return response;
+        }
+
+        character.Skills.Add(skill);
+        await _context.SaveChangesAsync();
+        response.Data = _mapper.Map<GetCharacterDto>(character);
+      }
+      catch (Exception ex)
+      {
+        response.Success = false;
+        response.Message = ex.Message;
+      }
+      return response;
     }
   }
 }

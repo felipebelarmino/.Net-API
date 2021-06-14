@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Dot_Net_Core_API_with_JWT.Controllers
 {
-  [Authorize]
+  [Authorize(Roles = "Player")]
   [ApiController]
   [Route("[controller]")]
   public class CharacterController : ControllerBase //Base class for MVC Controller
@@ -59,6 +59,12 @@ namespace Dot_Net_Core_API_with_JWT.Controllers
       if(response.Data == null) return NotFound(response);
 
       return Ok(response);
+    }
+
+    [HttpPost("Skill")]
+    public async Task<ActionResult<ServiceResponse<GetCharacterDto>>> AddCharacterSkill(AddCharacterSkillDto newCharacterSkill)
+    {
+      return Ok(await _characterService.AddCharacterSkill(newCharacterSkill));
     }
   }
 }

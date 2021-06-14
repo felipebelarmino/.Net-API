@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "1q0L+jcPJhjWB5l0EDWpTOAhN55HDAWAql+2ou0pr3tD981xduVQZwatC5nditmdhBPO73xcScsssSi2xckh0A==",
+  "dgSpecHash": "RLIhDjI/XyAKPQ6on1zqBfoxhtCO30A9VwxslaqoreWSxk3YZz/ON2892ZkZ50MWIB4BuelNZ/XBFVGH98Vx3Q==",
   "success": true,
   "projectFilePath": "C:\\Users\\f.gomes.belarmino\\Documents\\DiretorioGit\\C#\\Dot Net Core API with JWT\\Dot Net Core API with JWT.csproj",
   "expectedPackageFiles": [
@@ -29,7 +29,8 @@
     "C:\\Users\\f.gomes.belarmino\\.nuget\\packages\\microsoft.entityframeworkcore.analyzers\\5.0.7\\microsoft.entityframeworkcore.analyzers.5.0.7.nupkg.sha512",
     "C:\\Users\\f.gomes.belarmino\\.nuget\\packages\\microsoft.entityframeworkcore.design\\5.0.7\\microsoft.entityframeworkcore.design.5.0.7.nupkg.sha512",
     "C:\\Users\\f.gomes.belarmino\\.nuget\\packages\\microsoft.entityframeworkcore.relational\\5.0.7\\microsoft.entityframeworkcore.relational.5.0.7.nupkg.sha512",
-    "C:\\Users\\f.gomes.belarmino\\.nuget\\packages\\microsoft.entityframeworkcore.sqlserver\\5.0.7\\microsoft.entityframeworkcore.sqlserver.5.0.7.nupkg.sha512",
+    "C:\\Users\\f.gomes.belarmino\\.nuget\\packages\\microsoft.entityframeworkcore.sqlserver\\5.0.1\\microsoft.entityframeworkcore.sqlserver.5.0.1.nupkg.sha512",
+    "C:\\Users\\f.gomes.belarmino\\.nuget\\packages\\microsoft.entityframeworkcore.tools\\5.0.1\\microsoft.entityframeworkcore.tools.5.0.1.nupkg.sha512",
     "C:\\Users\\f.gomes.belarmino\\.nuget\\packages\\microsoft.extensions.apidescription.server\\3.0.0\\microsoft.extensions.apidescription.server.3.0.0.nupkg.sha512",
     "C:\\Users\\f.gomes.belarmino\\.nuget\\packages\\microsoft.extensions.caching.abstractions\\5.0.0\\microsoft.extensions.caching.abstractions.5.0.0.nupkg.sha512",
     "C:\\Users\\f.gomes.belarmino\\.nuget\\packages\\microsoft.extensions.caching.memory\\5.0.0\\microsoft.extensions.caching.memory.5.0.0.nupkg.sha512",

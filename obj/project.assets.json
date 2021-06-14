@@ -377,17 +377,29 @@
           "lib/netstandard2.1/Microsoft.EntityFrameworkCore.Relational.dll": {}
         }
       },
-      "Microsoft.EntityFrameworkCore.SqlServer/5.0.7": {
+      "Microsoft.EntityFrameworkCore.SqlServer/5.0.1": {
         "type": "package",
         "dependencies": {
           "Microsoft.Data.SqlClient": "2.0.1",
-          "Microsoft.EntityFrameworkCore.Relational": "5.0.7"
+          "Microsoft.EntityFrameworkCore.Relational": "5.0.1"
         },
         "compile": {
           "lib/netstandard2.1/Microsoft.EntityFrameworkCore.SqlServer.dll": {}
         },
         "runtime": {
           "lib/netstandard2.1/Microsoft.EntityFrameworkCore.SqlServer.dll": {}
+        }
+      },
+      "Microsoft.EntityFrameworkCore.Tools/5.0.1": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore.Design": "5.0.1"
+        },
+        "compile": {
+          "lib/netstandard2.1/_._": {}
+        },
+        "runtime": {
+          "lib/netstandard2.1/_._": {}
         }
       },
       "Microsoft.Extensions.ApiDescription.Server/3.0.0": {
@@ -2297,18 +2309,42 @@
         "microsoft.entityframeworkcore.relational.nuspec"
       ]
     },
-    "Microsoft.EntityFrameworkCore.SqlServer/5.0.7": {
-      "sha512": "xfMz5GfjB/xwafBM27Qjrn9JtJE5EDJpz73caUlVJWfZtNL7fhULFsIiwfx+RpupWqtvFpp9q9OTouJ9UMtWOw==",
+    "Microsoft.EntityFrameworkCore.SqlServer/5.0.1": {
+      "sha512": "FHo52VV2pvAJZBfNIYmre6MLe4LHTUZxMdmNJIOahcwdVpl2UG5YPEnI0qwKauan1PdJyPKmBsbLQvIEfvYLOQ==",
       "type": "package",
-      "path": "microsoft.entityframeworkcore.sqlserver/5.0.7",
+      "path": "microsoft.entityframeworkcore.sqlserver/5.0.1",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "Icon.png",
         "lib/netstandard2.1/Microsoft.EntityFrameworkCore.SqlServer.dll",
         "lib/netstandard2.1/Microsoft.EntityFrameworkCore.SqlServer.xml",
-        "microsoft.entityframeworkcore.sqlserver.5.0.7.nupkg.sha512",
+        "microsoft.entityframeworkcore.sqlserver.5.0.1.nupkg.sha512",
         "microsoft.entityframeworkcore.sqlserver.nuspec"
+      ]
+    },
+    "Microsoft.EntityFrameworkCore.Tools/5.0.1": {
+      "sha512": "aWC8uiAHkuZzOOxQwqzUyqRMGCCcqjthIUsJVn9I601UkVhxmHwvB/oARO1xb0GBaCfJuCJglo2wkehBjegwRQ==",
+      "type": "package",
+      "path": "microsoft.entityframeworkcore.tools/5.0.1",
+      "hasTools": true,
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "lib/netstandard2.1/_._",
+        "microsoft.entityframeworkcore.tools.5.0.1.nupkg.sha512",
+        "microsoft.entityframeworkcore.tools.nuspec",
+        "tools/EntityFrameworkCore.PS2.psd1",
+        "tools/EntityFrameworkCore.PS2.psm1",
+        "tools/EntityFrameworkCore.psd1",
+        "tools/EntityFrameworkCore.psm1",
+        "tools/about_EntityFrameworkCore.help.txt",
+        "tools/init.ps1",
+        "tools/net461/any/ef.exe",
+        "tools/net461/win-x86/ef.exe",
+        "tools/netcoreapp2.0/any/ef.dll",
+        "tools/netcoreapp2.0/any/ef.runtimeconfig.json"
       ]
     },
     "Microsoft.Extensions.ApiDescription.Server/3.0.0": {
@@ -6358,7 +6394,8 @@
       "AutoMapper.Extensions.microsoft.DependencyInjection >= 8.1.1",
       "Microsoft.AspNetCore.Authentication >= 2.2.0",
       "Microsoft.AspNetCore.Authentication.JwtBearer >= 5.0.7",
-      "Microsoft.EntityFrameworkCore.SqlServer >= 5.0.7",
+      "Microsoft.EntityFrameworkCore.SqlServer >= 5.0.1",
+      "Microsoft.EntityFrameworkCore.Tools >= 5.0.1",
       "Swashbuckle.AspNetCore >= 5.6.3",
       "Swashbuckle.AspNetCore.Filters >= 7.0.2",
       "microsoft.EntityFrameworkCore.Design >= 5.0.7"
@@ -6372,11 +6409,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\f.gomes.belarmino\\Documents\\DiretorioGit\\C#\\Dot Net Core API with JWT\\Dot Net Core API with JWT.csproj",
+      "projectUniqueName": "c:\\Users\\f.gomes.belarmino\\Documents\\DiretorioGit\\C#\\Dot Net Core API with JWT\\Dot Net Core API with JWT.csproj",
       "projectName": "Dot Net Core API with JWT",
-      "projectPath": "C:\\Users\\f.gomes.belarmino\\Documents\\DiretorioGit\\C#\\Dot Net Core API with JWT\\Dot Net Core API with JWT.csproj",
+      "projectPath": "c:\\Users\\f.gomes.belarmino\\Documents\\DiretorioGit\\C#\\Dot Net Core API with JWT\\Dot Net Core API with JWT.csproj",
       "packagesPath": "C:\\Users\\f.gomes.belarmino\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\f.gomes.belarmino\\Documents\\DiretorioGit\\C#\\Dot Net Core API with JWT\\obj\\",
+      "outputPath": "c:\\Users\\f.gomes.belarmino\\Documents\\DiretorioGit\\C#\\Dot Net Core API with JWT\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
@@ -6425,7 +6462,13 @@
           },
           "Microsoft.EntityFrameworkCore.SqlServer": {
             "target": "Package",
-            "version": "[5.0.7, )"
+            "version": "[5.0.1, )"
+          },
+          "Microsoft.EntityFrameworkCore.Tools": {
+            "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+            "suppressParent": "All",
+            "target": "Package",
+            "version": "[5.0.1, )"
           },
           "Swashbuckle.AspNetCore": {
             "target": "Package",

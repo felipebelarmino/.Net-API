@@ -33,7 +33,7 @@ namespace Dot_Net_Core_API_with_JWT.Data
       else if (!VerifyPasswordHash(password, user.PasswordHash, user.PasswordSalt))
       {
         response.Success = false;
-        response.Message = "Credenciais inválidas.";
+        response.Message = "Senha inválida.";
       }
       else
       {
@@ -105,7 +105,8 @@ namespace Dot_Net_Core_API_with_JWT.Data
       var claims = new List<Claim>
       {
         new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-        new Claim(ClaimTypes.Name, user.Username.ToString()),
+        new Claim(ClaimTypes.Name, user.Username),
+        new Claim(ClaimTypes.Role, user.Role),
       };
 
       var key = new SymmetricSecurityKey
