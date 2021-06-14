@@ -20,7 +20,6 @@ namespace Dot_Net_Core_API_with_JWT.Data
       _context = context;
     }
 
-
     public async Task<ServiceResponse<string>> Login(string username, string password)
     {
       var response = new ServiceResponse<string>();

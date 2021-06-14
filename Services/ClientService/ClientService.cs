@@ -26,13 +26,14 @@ namespace Dot_Net_Core_API_with_JWT.Services.ClientService
     }
 
     private int GetUserId() => int.Parse(_httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
-
     private string GetUserRole() => _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Role);
 
     public async Task<ServiceResponse<List<GetClientDto>>> AddClient(AddClientDto newClient)
     {
       var serviceResponse = new ServiceResponse<List<GetClientDto>>();
+
       Client client = _mapper.Map<Client>(newClient);
+
       client.User = await _context.Users.FirstOrDefaultAsync(u => u.Id == GetUserId());
 
       _context.Clients.Add(client); //Add client
@@ -78,7 +79,7 @@ namespace Dot_Net_Core_API_with_JWT.Services.ClientService
 
       var dbClients =
       GetUserRole().Equals("Admin") ? await _context.Clients.ToListAsync()
-        : //Caso não seja Admin retorna apenas o que o user possui
+        :
       await _context.Clients
         .Where(c => c.User.Id == GetUserId()).ToListAsync();
       serviceResponse.Data = dbClients.Select(c => _mapper.Map<GetClientDto>(c)).ToList();
@@ -89,13 +90,10 @@ namespace Dot_Net_Core_API_with_JWT.Services.ClientService
     {
       var serviceResponse = new ServiceResponse<GetClientDto>();
       var dbClient = await _context.Clients
-        // .Include(c => c.Weapon)
-        // .Include(c => c.Skills)
         .FirstOrDefaultAsync(c => c.Id == id && c.User.Id == GetUserId());
       serviceResponse.Data = _mapper.Map<GetClientDto>(dbClient);
       return serviceResponse;
     }
-
     public async Task<ServiceResponse<GetClientDto>> UpdateClient(UpdateClientDto updatedClient)
     {
       var serviceResponse = new ServiceResponse<GetClientDto>();

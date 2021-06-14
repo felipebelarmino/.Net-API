@@ -29,6 +29,7 @@ namespace Dot_Net_Core_API_with_JWT
     {
       services.AddDbContext<DataContext>(options =>
         options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+        
       services.AddControllers();
 
       services.AddSwaggerGen(c =>

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace Dot_Net_Core_API_with_JWT.Models
@@ -9,5 +10,10 @@ namespace Dot_Net_Core_API_with_JWT.Models
     public string Adress { get; set; } 
     public Cupom Class { get; set; } = Cupom.Nenhum; //Enum
     public User User { get; set; }
+
+    public static implicit operator string(Client v)
+    {
+      throw new NotImplementedException();
+    }
   }
 }

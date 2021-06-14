@@ -11,7 +11,7 @@ namespace Dot_Net_Core_API_with_JWT.Services.ClientService
 
         Task<ServiceResponse<GetClientDto>> GetClientById(int id);
 
-        Task<ServiceResponse<List<GetClientDto>>> AddClient(AddClientDto newClient);
+        Task<ServiceResponse<List<GetClientDto>>> AddClient(AddClientDto newClient);        
 
         Task<ServiceResponse<GetClientDto>> UpdateClient(UpdateClientDto updateClient);
 
