@@ -1,11 +1,12 @@
+using System.Collections.Generic;
+
 namespace Dot_Net_Core_API_with_JWT.Models
 {
-    public class Weapon
+    public class Skill
     {
         public int Id { get; set; }
         public string Name { get; set; }
         public int Damage { get; set; }
-        public Character Character { get; set; }
-        public int CharacterId { get; set; }
+        public List<Character> Characters { get; set; }
     }
 }

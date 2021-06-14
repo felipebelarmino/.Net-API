@@ -1,6 +1,7 @@
 using System.Text;
 using Dot_Net_Core_API_with_JWT.Data;
 using Dot_Net_Core_API_with_JWT.Services.CharacterService;
+using Dot_Net_Core_API_with_JWT.Services.WeaponService;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -62,6 +63,7 @@ namespace Dot_Net_Core_API_with_JWT
           };
       });  
       services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+      services.AddScoped<IWeaponService, WeaponService>();
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

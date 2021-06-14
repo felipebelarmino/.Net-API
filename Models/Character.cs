@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace Dot_Net_Core_API_with_JWT.Models
 {
   public class Character
@@ -11,5 +13,6 @@ namespace Dot_Net_Core_API_with_JWT.Models
     public RpgClass Class { get; set; } = RpgClass.Mage; //Enum
     public User User { get; set; }
     public Weapon Weapon { get; set; } //One to onde relationship
+    public List<Skill> Skills{ get; set; } //Many to Many relationship
   }
 }

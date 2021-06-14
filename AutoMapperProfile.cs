@@ -1,5 +1,6 @@
 using AutoMapper;
 using Dot_Net_Core_API_with_JWT.Dtos.Character;
+using Dot_Net_Core_API_with_JWT.Dtos.Weapon;
 using Dot_Net_Core_API_with_JWT.Models;
 
 namespace Dot_Net_Core_API_with_JWT
@@ -10,6 +11,7 @@ namespace Dot_Net_Core_API_with_JWT
         {
             CreateMap<Character, GetCharacterDto>();
             CreateMap<AddCharacterDto, Character>();
+            CreateMap<Weapon, GetWeaponDto>();
         }
     }
 }
