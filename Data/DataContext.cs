@@ -13,5 +13,7 @@ namespace Dot_Net_Core_API_with_JWT.Data
         public DbSet<Character> Characters { get; set; }
 
         public DbSet<User> Users { get; set; }
+
+        public DbSet<Weapon> Weapons { get; set; }
     }
 }

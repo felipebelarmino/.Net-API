@@ -4,6 +4,7 @@ using Dot_Net_Core_API_with_JWT.Services.CharacterService;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -59,7 +60,8 @@ namespace Dot_Net_Core_API_with_JWT
             ValidateIssuer = false,
             ValidateAudience = false
           };
-      });   
+      });  
+      services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

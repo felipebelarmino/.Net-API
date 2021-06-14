@@ -25,8 +25,8 @@ namespace Dot_Net_Core_API_with_JWT.Controllers
     [HttpGet("getall")] // Route character/getall
     public async Task<ActionResult<ServiceResponse<List<GetCharacterDto>>>> Get() //Swagger needs => ActionResult<Character> Else Can use IActionResult
     { 
-      int id = int.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
-      return Ok(await _characterService.GetAllCharacters(id)); //Return a list of characters
+      // int id = int.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
+      return Ok(await _characterService.GetAllCharacters()); //Return a list of characters
     }
 
     [HttpGet("{id}")] // Route character/id

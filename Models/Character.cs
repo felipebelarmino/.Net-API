@@ -10,5 +10,6 @@ namespace Dot_Net_Core_API_with_JWT.Models
     public int Intelligence { get; set; } = 10;
     public RpgClass Class { get; set; } = RpgClass.Mage; //Enum
     public User User { get; set; }
+    public Weapon Weapon { get; set; } //One to onde relationship
   }
 }
