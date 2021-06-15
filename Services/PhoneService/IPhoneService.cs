@@ -9,6 +9,8 @@ namespace Dot_Net_Core_API_with_JWT.Services.PhoneService
   {
     Task<ServiceResponse<List<GetPhoneDto>>> GetAllPhones();
 
+    Task<ServiceResponse<List<GetPhoneDto>>> GetAllPhonesByClientId(int clientId);
+
     Task<ServiceResponse<GetPhoneDto>> GetPhoneById(int id);
 
     Task<ServiceResponse<List<GetPhoneDto>>> AddPhone(AddPhoneDto newPhone);

@@ -25,14 +25,31 @@ namespace Dot_Net_Core_API_with_JWT.Services.PhoneService
     {
       var serviceResponse = new ServiceResponse<List<GetPhoneDto>>();
 
+      var hasPhone = String.IsNullOrEmpty(newPhone.ClientId.ToString());
+      var hasNumber = String.IsNullOrEmpty(newPhone.PhoneNumber.ToString());
+
+      if(hasPhone)
+      {
+        serviceResponse.Success = false;
+        serviceResponse.Message = "Favor informar ID do cliente";
+        return serviceResponse;
+      }
+
+      if(hasNumber)
+      {
+        serviceResponse.Success = false;
+        serviceResponse.Message = "Favor informar um número de telefone.";
+        return serviceResponse;
+      }
+
       try
       {
         Phone phone = _mapper.Map<Phone>(newPhone);
-        var clientExists = await _context.Clients.FirstOrDefaultAsync(c => c.Id == newPhone.ClientId);
+        var id = await _context.Clients.FirstOrDefaultAsync(c => c.Id == newPhone.ClientId);
 
-        if (clientExists != null)
+        if (id != null)
         {
-          phone.Client = await _context.Clients.FirstOrDefaultAsync(c => c.Id == newPhone.ClientId);
+          phone.Client = id;
           _context.Phones.Add(phone);
           await _context.SaveChangesAsync();
           serviceResponse.Data = await _context.Phones
@@ -52,6 +69,45 @@ namespace Dot_Net_Core_API_with_JWT.Services.PhoneService
       }
       return serviceResponse;
     }
+    
+    public async Task<ServiceResponse<List<GetPhoneDto>>> GetAllPhonesByClientId(int clientId)
+    {
+      var serviceResponse = new ServiceResponse<List<GetPhoneDto>>();
+      var id = await _context.Clients.FirstOrDefaultAsync(c => c.Id == clientId);
+
+      try
+      {
+        if (id != null)
+        {
+          var dbPhones = await _context.Phones.ToListAsync();
+          serviceResponse.Data = dbPhones
+            .Where(c => c.Client == id)
+            .Select(c => _mapper.Map<GetPhoneDto>(c)).ToList();                
+        }
+        else
+        {
+          serviceResponse.Success = false;
+          serviceResponse.Message = "ID do cliente não encontrado.";
+        }
+      }
+      catch (Exception ex)
+      {
+        serviceResponse.Success = false;
+        serviceResponse.Message = ex.Message;
+      }
+      
+      return serviceResponse;
+    }
+
+    public async Task<ServiceResponse<List<GetPhoneDto>>> GetAllPhones()
+    {
+      var serviceResponse = new ServiceResponse<List<GetPhoneDto>>();
+
+      var dbPhones = await _context.Phones.ToListAsync();
+      serviceResponse.Data = dbPhones
+        .Select(c => _mapper.Map<GetPhoneDto>(c)).ToList();
+      return serviceResponse;
+    }
 
     public async Task<ServiceResponse<List<GetPhoneDto>>> DeletePhone(int id)
     {
@@ -68,14 +124,6 @@ namespace Dot_Net_Core_API_with_JWT.Services.PhoneService
         serviceResponse.Success = false;
         serviceResponse.Message = ex.Message;
       }
-      return serviceResponse;
-    }
-
-    public async Task<ServiceResponse<List<GetPhoneDto>>> GetAllPhones()
-    {
-      var serviceResponse = new ServiceResponse<List<GetPhoneDto>>();
-      var dbPhones = await _context.Phones.ToListAsync();
-      serviceResponse.Data = dbPhones.Select(c => _mapper.Map<GetPhoneDto>(c)).ToList();
       return serviceResponse;
     }
 

@@ -27,6 +27,12 @@ namespace Dot_Net_Core_API_with_JWT.Controllers
       return Ok(await _phoneService.GetAllPhones());
     }
 
+    [HttpGet("GetAllByClientId")]
+    public async Task<ActionResult<ServiceResponse<List<GetPhoneDto>>>> GetAllPhonesByClientId(int clientId)
+    {
+      return Ok(await _phoneService.GetAllPhonesByClientId(clientId));
+    }
+
     [HttpGet("{id}")]
     public async Task<ActionResult<ServiceResponse<GetPhoneDto>>> GetSingle(int id)
     {
@@ -36,7 +42,6 @@ namespace Dot_Net_Core_API_with_JWT.Controllers
     [HttpPost]
     public async Task<ActionResult<ServiceResponse<GetPhoneDto>>> AddPhone(AddPhoneDto newPhone)
     {
-
       return Ok(await _phoneService.AddPhone(newPhone));
     }
 
@@ -44,9 +49,7 @@ namespace Dot_Net_Core_API_with_JWT.Controllers
     public async Task<ActionResult<ServiceResponse<GetPhoneDto>>> UpdatePhone(UpdatePhoneDto updatedPhone)
     {
       var response = await _phoneService.UpdatePhone(updatedPhone);
-
       if (response.Data == null) return NotFound(response);
-
       return Ok(response);
     }
 
@@ -54,9 +57,7 @@ namespace Dot_Net_Core_API_with_JWT.Controllers
     public async Task<ActionResult<ServiceResponse<List<GetPhoneDto>>>> Delete(int id)
     {
       var response = await _phoneService.DeletePhone(id);
-
       if (response.Data == null) return NotFound(response);
-
       return Ok(response);
     }
   }
