@@ -1,6 +1,7 @@
 using System.Text;
 using Dot_Net_Core_API_with_JWT.Data;
 using Dot_Net_Core_API_with_JWT.Services.ClientService;
+using Dot_Net_Core_API_with_JWT.Services.PhoneService;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -29,7 +30,7 @@ namespace Dot_Net_Core_API_with_JWT
     {
       services.AddDbContext<DataContext>(options =>
         options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-        
+
       services.AddControllers();
 
       services.AddSwaggerGen(c =>
@@ -49,6 +50,7 @@ namespace Dot_Net_Core_API_with_JWT
       services.AddAutoMapper(typeof(Startup));
       services.AddScoped<IClientService, clientService>();
       services.AddScoped<IAuthRepository, AuthRepository>();
+      services.AddScoped<IPhoneService, PhoneService>();
 
       services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         .AddJwtBearer(options =>

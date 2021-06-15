@@ -7,7 +7,7 @@ namespace Dot_Net_Core_API_with_JWT.Services.ClientService
 {
     public interface IClientService
     {
-        Task<ServiceResponse<List<GetClientDto>>> GetAllClients(); //Task is for assync
+        Task<ServiceResponse<List<GetClientDto>>> GetAllClients();
 
         Task<ServiceResponse<GetClientDto>> GetClientById(int id);
 

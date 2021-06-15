@@ -104,10 +104,15 @@ namespace Dot_Net_Core_API_with_JWT.Migrations
             modelBuilder.Entity("Dot_Net_Core_API_with_JWT.Models.Phone", b =>
                 {
                     b.HasOne("Dot_Net_Core_API_with_JWT.Models.Client", "Client")
-                        .WithMany()
+                        .WithMany("Phones")
                         .HasForeignKey("ClientId");
 
                     b.Navigation("Client");
+                });
+
+            modelBuilder.Entity("Dot_Net_Core_API_with_JWT.Models.Client", b =>
+                {
+                    b.Navigation("Phones");
                 });
 
             modelBuilder.Entity("Dot_Net_Core_API_with_JWT.Models.User", b =>

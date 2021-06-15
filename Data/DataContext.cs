@@ -16,9 +16,9 @@ namespace Dot_Net_Core_API_with_JWT.Data
     public DbSet<Phone> Phones { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {    
+    {
       modelBuilder.Entity<User>()
-        .Property(user => user.Role).HasDefaultValue("Atendente"); //All new users have default role Player
+        .Property(user => user.Role).HasDefaultValue("Atendente");
     }
   }
 }

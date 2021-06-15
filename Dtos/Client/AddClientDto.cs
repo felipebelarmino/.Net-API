@@ -6,6 +6,6 @@ namespace Dot_Net_Core_API_with_JWT.Dtos.Client
   {
     public string Name { get; set; }
     public string Adress { get; set; }
-    public Cupom Class { get; set; } = Cupom.Novo; //Enum
+    public Cupom Class { get; set; } = Cupom.NenhumDesconto;
   }
 }

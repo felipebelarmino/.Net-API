@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Dot_Net_Core_API_with_JWT.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20210615000207_Clients")]
-    partial class Clients
+    [Migration("20210615172307_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -106,10 +106,15 @@ namespace Dot_Net_Core_API_with_JWT.Migrations
             modelBuilder.Entity("Dot_Net_Core_API_with_JWT.Models.Phone", b =>
                 {
                     b.HasOne("Dot_Net_Core_API_with_JWT.Models.Client", "Client")
-                        .WithMany()
+                        .WithMany("Phones")
                         .HasForeignKey("ClientId");
 
                     b.Navigation("Client");
+                });
+
+            modelBuilder.Entity("Dot_Net_Core_API_with_JWT.Models.Client", b =>
+                {
+                    b.Navigation("Phones");
                 });
 
             modelBuilder.Entity("Dot_Net_Core_API_with_JWT.Models.User", b =>
