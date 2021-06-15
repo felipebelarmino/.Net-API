@@ -4,10 +4,12 @@ using System.Threading.Tasks;
 using Dot_Net_Core_API_with_JWT.Dtos.Phone;
 using Dot_Net_Core_API_with_JWT.Models;
 using Dot_Net_Core_API_with_JWT.Services.PhoneService;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Dot_Net_Core_API_with_JWT.Controllers
 {
+  [Authorize]
   [ApiController]
   [Route("[controller]")]
   public class PhoneController : ControllerBase
