@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Dot_Net_Core_API_with_JWT.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20210614235744_Clients")]
+    [Migration("20210615000207_Clients")]
     partial class Clients
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -54,7 +54,7 @@ namespace Dot_Net_Core_API_with_JWT.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("ClientIdId")
+                    b.Property<int?>("ClientId")
                         .HasColumnType("int");
 
                     b.Property<string>("PhoneNumber")
@@ -62,7 +62,7 @@ namespace Dot_Net_Core_API_with_JWT.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ClientIdId");
+                    b.HasIndex("ClientId");
 
                     b.ToTable("Phones");
                 });
@@ -105,11 +105,11 @@ namespace Dot_Net_Core_API_with_JWT.Migrations
 
             modelBuilder.Entity("Dot_Net_Core_API_with_JWT.Models.Phone", b =>
                 {
-                    b.HasOne("Dot_Net_Core_API_with_JWT.Models.Client", "ClientId")
+                    b.HasOne("Dot_Net_Core_API_with_JWT.Models.Client", "Client")
                         .WithMany()
-                        .HasForeignKey("ClientIdId");
+                        .HasForeignKey("ClientId");
 
-                    b.Navigation("ClientId");
+                    b.Navigation("Client");
                 });
 
             modelBuilder.Entity("Dot_Net_Core_API_with_JWT.Models.User", b =>

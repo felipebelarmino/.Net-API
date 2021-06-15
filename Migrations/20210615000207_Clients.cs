@@ -52,14 +52,14 @@ namespace Dot_Net_Core_API_with_JWT.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ClientIdId = table.Column<int>(type: "int", nullable: true)
+                    ClientId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Phones", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Phones_Clients_ClientIdId",
-                        column: x => x.ClientIdId,
+                        name: "FK_Phones_Clients_ClientId",
+                        column: x => x.ClientId,
                         principalTable: "Clients",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -71,9 +71,9 @@ namespace Dot_Net_Core_API_with_JWT.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Phones_ClientIdId",
+                name: "IX_Phones_ClientId",
                 table: "Phones",
-                column: "ClientIdId");
+                column: "ClientId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
