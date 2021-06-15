@@ -4,6 +4,6 @@ namespace Dot_Net_Core_API_with_JWT.Dtos.Phone
   {
     public int Id { get; set; }
     public string PhoneNumber { get; set; }
-    // public Client Client { get; set; }
+    public int ClientId { get; set; }
   }
 }
