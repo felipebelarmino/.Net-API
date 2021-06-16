@@ -112,7 +112,7 @@ namespace Dot_Net_Core_API_with_JWT.Services.ClientService
         else
         {
           serviceResponse.Success = false;
-          serviceResponse.Message = "Personagem não encontrado.";
+          serviceResponse.Message = "Cliente não encontrado.";
         }
       }
       catch (Exception ex)
