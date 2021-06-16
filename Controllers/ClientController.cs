@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Dot_Net_Core_API_with_JWT.Controllers
 {
-  [Authorize(Roles = "Atendente")]
+  [Authorize(Roles = "Atendente, Admin")]
   [ApiController]
   [Route("[controller]")]
   public class ClientController : ControllerBase
@@ -19,7 +19,7 @@ namespace Dot_Net_Core_API_with_JWT.Controllers
     {
       _clientService = clientService;
     }
-
+ 
     [HttpGet("getall")]
     public async Task<ActionResult<ServiceResponse<List<GetClientDto>>>> Get()
     {       

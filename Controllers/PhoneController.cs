@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Dot_Net_Core_API_with_JWT.Dtos.Phone;
 using Dot_Net_Core_API_with_JWT.Models;
@@ -19,12 +18,10 @@ namespace Dot_Net_Core_API_with_JWT.Controllers
     public PhoneController(IPhoneService phoneService)
     {
       _phoneService = phoneService;
-
-    }
-    private readonly IPhoneService phoneService;
+    }  
 
     [HttpGet("GetAll")]
-    public async Task<ActionResult<ServiceResponse<List<GetPhoneDto>>>> Get()
+    public async Task<ActionResult<ServiceResponse<List<GetPhoneDto>>>> GetAllPhones()
     {
       return Ok(await _phoneService.GetAllPhones());
     }

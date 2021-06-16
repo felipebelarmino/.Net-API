@@ -75,14 +75,12 @@ namespace Dot_Net_Core_API_with_JWT.Services.ClientService
 
     public async Task<ServiceResponse<List<GetClientDto>>> GetAllClients()
     {
-      var serviceResponse = new ServiceResponse<List<GetClientDto>>();
-
-      var dbClients =
-      GetUserRole().Equals("Admin") ? await _context.Clients.ToListAsync()
-        :
-      await _context.Clients
-        .Where(c => c.User.Id == GetUserId()).ToListAsync();
-      serviceResponse.Data = dbClients.Select(c => _mapper.Map<GetClientDto>(c)).ToList();
+      ServiceResponse<List<GetClientDto>> serviceResponse = new ServiceResponse<List<GetClientDto>>();
+      List<Client> dbClients =
+        GetUserRole().Equals("Admin") ?
+        await _context.Clients.ToListAsync() :
+        await _context.Clients.Where(c => c.User.Id == GetUserId()).ToListAsync();
+      serviceResponse.Data = (dbClients.Select(c => _mapper.Map<GetClientDto>(c))).ToList();
       return serviceResponse;
     }
 
