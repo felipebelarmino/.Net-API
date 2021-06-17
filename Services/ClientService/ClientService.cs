@@ -79,19 +79,35 @@ namespace Dot_Net_Core_API_with_JWT.Services.ClientService
       List<Client> dbClients =
         GetUserRole().Equals("Admin") ?
         await _context.Clients.ToListAsync() :
-        await _context.Clients.Where(c => c.User.Id == GetUserId()).ToListAsync();
+        await _context.Clients
+          .Include(c => c.Phones)
+          .Where(c => c.User.Id == GetUserId()).ToListAsync();
       serviceResponse.Data = (dbClients.Select(c => _mapper.Map<GetClientDto>(c))).ToList();
       return serviceResponse;
     }
+
+
+
+
+
 
     public async Task<ServiceResponse<GetClientDto>> GetClientById(int id)
     {
       var serviceResponse = new ServiceResponse<GetClientDto>();
       var dbClient = await _context.Clients
+        .Include(c => c.Phones)
         .FirstOrDefaultAsync(c => c.Id == id && c.User.Id == GetUserId());
       serviceResponse.Data = _mapper.Map<GetClientDto>(dbClient);
       return serviceResponse;
     }
+
+
+
+
+
+
+
+
     public async Task<ServiceResponse<GetClientDto>> UpdateClient(UpdateClientDto updatedClient)
     {
       var serviceResponse = new ServiceResponse<GetClientDto>();

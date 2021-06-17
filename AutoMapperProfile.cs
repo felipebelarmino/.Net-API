@@ -10,7 +10,6 @@ namespace Dot_Net_Core_API_with_JWT
     {
       CreateMap<Client, GetClientDto>();
       CreateMap<AddClientDto, Client>();
-
       CreateMap<Phone, GetPhoneDto>();
       CreateMap<AddPhoneDto, Phone>();
     }

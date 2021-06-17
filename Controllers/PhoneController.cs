@@ -54,7 +54,7 @@ namespace Dot_Net_Core_API_with_JWT.Controllers
 
     [HttpDelete("{id}")]
     public async Task<ActionResult<ServiceResponse<List<GetPhoneDto>>>> Delete(int id)
-    {
+    {      
       var response = await _phoneService.DeletePhone(id);
       if (response.Data == null) return NotFound(response);
       return Ok(response);
