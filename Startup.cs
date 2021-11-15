@@ -1,3 +1,4 @@
+using System;
 using System.Text;
 using Dot_Net_Core_API_with_JWT.Data;
 using Dot_Net_Core_API_with_JWT.Services.ClientService;
@@ -18,26 +19,50 @@ namespace Dot_Net_Core_API_with_JWT
 {
   public class Startup
   {
+    //readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
     public Startup(IConfiguration configuration)
     {
       Configuration = configuration;
     }
 
     public IConfiguration Configuration { get; }
-
-    // This method gets called by the runtime. Use this method to add services to the container.
     public void ConfigureServices(IServiceCollection services)
     {
+        services.AddSwaggerGen();
+
+        services.AddCors(options =>
+        {
+          options.AddDefaultPolicy(builder =>
+                            {
+                              builder.AllowAnyOrigin()
+                                     .AllowAnyHeader()
+                                     .AllowAnyMethod();
+                            });
+        });
+
       services.AddDbContext<DataContext>(options =>
         options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
       services.AddControllers();
 
+
       services.AddSwaggerGen(c =>
       {
-        c.SwaggerDoc("v1", new OpenApiInfo { Title = "Dot_Net_Core_API_with_JWT", Version = "v1" });
+        c.SwaggerDoc("v1", new OpenApiInfo { 
+            
+            Version = "v1",
+            Title = "Dot_Net_Core_API_with_JWT",
+            Description = "API with Jwt implemented and relationships",
+            Contact = new OpenApiContact
+            {
+                Name = "Felipe G. Belarmino",
+                Email = "f.gomes.belarmino@avanade.com",
+                Url = new Uri("https://www.linkedin.com/in/felipe-belarmino/"),
+            }
+        });
 
-        c.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
+          c.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
         {
           Description = "Standard Authorization header using the Bearer Scheme. Example: \"Bearer{token}\"",
           In = ParameterLocation.Header,
@@ -72,22 +97,35 @@ namespace Dot_Net_Core_API_with_JWT
     {
       if (env.IsDevelopment())
       {
+        app.UseCors();
         app.UseDeveloperExceptionPage();
         app.UseSwagger();
-        app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Dot_Net_Core_API_with_JWT v1"));
+        app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "DotNetCoreAPI"));
       }
 
       app.UseHttpsRedirection();
 
-      app.UseRouting();
-
       app.UseAuthentication();
 
-      app.UseAuthorization();
+        app.UseSwagger(c =>
+        {
+            c.SerializeAsV2 = true;
+        });
+
+        app.UseSwaggerUI(c => {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "DotNetCoreAPI");
+        c.RoutePrefix = string.Empty;
+      });
+
+      app.UseRouting();
+
+      app.UseCors();
+
+      app.UseAuthorization();      
 
       app.UseEndpoints(endpoints =>
       {
-        endpoints.MapControllers();
+        endpoints.MapControllers();          
       });
     }
   }

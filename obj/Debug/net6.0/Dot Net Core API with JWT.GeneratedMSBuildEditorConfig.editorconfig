@@ -12,4 +12,4 @@ build_property.RazorLangVersion = 5.0
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
 build_property.MSBuildProjectDirectory = c:\Users\f.gomes.belarmino\Documents\DiretorioGit\C#\Dot Net Core API with JWT
 build_property._RazorSourceGeneratorDebug = 
-build_property._RazorSourceGeneratorLog =
+build_property._RazorSourceGeneratorHeapDumps =
